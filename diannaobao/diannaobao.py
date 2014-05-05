@@ -2,6 +2,15 @@
 import urllib.request
 import lxml.html
 import re
+import xlwt  # 该模块不支持65000以上行，如果需要，用openpyxl
+
+'''
+该脚本会通过自动获取电脑报在线上面的最新内容并将标题、内容概括、
+链接地址这三项存入Excel文件中，因为没使用openpyxl模块，所以只能存
+为xls而不是xlsx那种可以存放超过65535行数据的格式，其实超过几十万行
+存入数据库或者json里更好一些，超过几百万数据Excel2007格式也搞不定。
+
+'''
 
 
 def yuandaima(ss):
@@ -40,8 +49,16 @@ def getxpath(ss, daima):
     aa = doc.xpath(ss)
     return aa
 
+
+def geturl():
+    gg = yuandaima('http://www.icpcw.com/Newspaper/Hot')
+    uuu = 'http://www.icpcw.com' + \
+        getxpath('//div[@class="j_ywnav"]/ul/li[2]/a/@href', gg)[0]
+    return uuu
+
+
 if __name__ == '__main__':
-    url = 'http://www.icpcw.com/Newspaper/117/'
+    url = geturl()
     scode = yuandaima(url)
     if panduan(scode):
         urls = panduan(scode) + [url]
@@ -58,23 +75,26 @@ if __name__ == '__main__':
         contents += content
         hrefs += href
 
-    contents=qukongge(contents)
+    contents = qukongge(contents)
 
-    ff = list(zip(titles, contents, hrefs))
-<<<<<<< HEAD:自动爬取电脑报在线/diannaobao.py
-    # ff = [str(aa) for aa in ff]
-    print(str(ff[0]))
-=======
-    print(ff)
->>>>>>> 973ac24e93630b227bb710619d3e92bcddd658f7:diannaobao.py
+    # ff = list(zip(titles, contents, hrefs))
 
+    # ff = ['\t'.join(aa) for aa in ff]
+    # print(ff)
 
+    wbk = xlwt.Workbook()
+    sheet1 = wbk.add_sheet('sheet 1', cell_overwrite_ok=True)
 
-
-
-
-
-
-    # with open('1.txt', 'w',encoding='utf-8') as f:
-    #     for i in ff:
-    #         f.write(str(i) + '\n\n')
+    i = 0
+    for _ in titles:
+        sheet1.write(i, 0, _)
+        i += 1
+    i = 0
+    for _ in contents:
+        sheet1.write(i, 1, _)
+        i += 1
+    i = 0
+    for _ in hrefs:
+        sheet1.write(i, 2, _)
+        i += 1
+    wbk.save('test.xls')
