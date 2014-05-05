@@ -61,6 +61,15 @@ if __name__ == '__main__':
     contents=qukongge(contents)
 
     ff = list(zip(titles, contents, hrefs))
-    with open('1.txt', 'w',encoding='utf-8') as f:
-        for i in ff:
-            f.write(str(i) + '\n\n')
+    print(ff)
+
+
+
+
+
+
+
+
+    # with open('1.txt', 'w',encoding='utf-8') as f:
+    #     for i in ff:
+    #         f.write(str(i) + '\n\n')
