@@ -61,8 +61,12 @@ if __name__ == '__main__':
     contents=qukongge(contents)
 
     ff = list(zip(titles, contents, hrefs))
+<<<<<<< HEAD:自动爬取电脑报在线/diannaobao.py
     # ff = [str(aa) for aa in ff]
     print(str(ff[0]))
+=======
+    print(ff)
+>>>>>>> 973ac24e93630b227bb710619d3e92bcddd658f7:diannaobao.py
 
 
 
