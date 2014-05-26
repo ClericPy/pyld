@@ -2,7 +2,7 @@
 import urllib.request
 import re
 
-pid = 35392148256
+pid = 22879472372
 
 def get1():
     url = r'http://mdskip.taobao.com/core/initItemDetail.htm?cartEnable=false&callback=setMdskip&itemId=' + \
